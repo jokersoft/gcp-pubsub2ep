@@ -71,3 +71,9 @@ variable "message_retention_duration" {
   default = "604800s"
   type    = string
 }
+
+variable "schema_definition_string" {
+  description = "If set, must contain JSON AVRO validation schema for message payload."
+  default = ""
+  type    = string
+}
