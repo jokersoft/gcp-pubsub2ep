@@ -7,10 +7,28 @@ Featuring:
 - retries (circuit breaker)
 - dead letter queue
 - OIDC auth (secure: signed headers)
+- payload schema validation (AVRO)
 
-TODO:
-- schema validation
+## TODO
+- event-recorder function (persist_policy)
+- debug mode for event-recorder
+- make DLQ optional
 
+# Schema Validation
+To enable **schema validation** - you need to set `input_schema_definition_string` to non-empty string, containing [AVRO schema](https://avro.apache.org/docs/current/spec.html#json_encoding).
+For example:
+```shell
+schema_definition_string = file("schema.json")
+```
+for example of [AVRO schema](https://avro.apache.org/docs/current/spec.html#json_encoding) see [schema-example.json](schema-example.json)
+
+**Attention!** To **ADD** or **REMOVE** schema - you have to **recreate** the **Topic**!
+Otherwise, you'll get:
+```shell
+Error: Error updating Topic "...": googleapi: Error 400: Invalid update_mask provided in the UpdateTopicRequest: the 'schema_settings' field in the Topic is not mutable.
+```
+
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 No requirements.
@@ -43,3 +61,4 @@ No requirements.
 |------|-------------|
 | url | Cloud Function EP |
 | version | Version of build (likely, short commit) |
+<!-- END_TF_DOCS -->
